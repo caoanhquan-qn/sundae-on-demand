@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Container } from "react-bootstrap";
+import { OrderDetailsProvider } from "./contexts/OrderDetails";
+import OrderEntry from "./pages/entry/OrderEntry";
+import OrderSummary from "./pages/summary/OrderSummary";
+import OrderConfirmation from "./pages/confirmation/OrderConfirmation";
 
 function App() {
+  const [orderPhase, setOrderPhase] = useState(1);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <OrderDetailsProvider>
+        {orderPhase === 1 && <OrderEntry setOrderPhase={setOrderPhase} />}
+        {orderPhase === 2 && <OrderSummary setOrderPhase={setOrderPhase} />}
+        {orderPhase === 3 && (
+          <OrderConfirmation setOrderPhase={setOrderPhase} />
+        )}
+      </OrderDetailsProvider>
+    </Container>
   );
 }
 
